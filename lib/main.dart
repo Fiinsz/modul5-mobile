@@ -177,6 +177,9 @@ class _Latihan1PageState extends State<Latihan1Page> {
 
   @override
   Widget build(BuildContext context) {
+    final effectiveCrossForColumn =
+        _crossAxis == CrossAxisAlignment.baseline ? CrossAxisAlignment.center : _crossAxis;
+
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -201,21 +204,36 @@ class _Latihan1PageState extends State<Latihan1Page> {
               ),
             ],
           ),
+          const SizedBox(height: 8),
+          Text('mainAxis: ${_mainAxis.name} | crossAxis: ${_crossAxis.name}'),
           const SizedBox(height: 12),
           Expanded(
             child: Container(
               width: double.infinity,
+              height: 220,
               decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.surfaceContainerHighest,
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Column(
                 mainAxisAlignment: _mainAxis,
-                crossAxisAlignment: _crossAxis,
-                children: const [
-                  _ColoredBox(label: 'Teks 1', color: Colors.teal),
-                  _ColoredBox(label: 'Teks 2', color: Colors.deepOrange),
-                  _ColoredBox(label: 'Teks 3', color: Colors.indigo),
+                crossAxisAlignment: effectiveCrossForColumn,
+                children: [
+                  _ColoredBox(
+                    label: 'Teks 1',
+                    color: Colors.teal,
+                    size: _crossAxis == CrossAxisAlignment.stretch ? null : const Size(80, 40),
+                  ),
+                  _ColoredBox(
+                    label: 'Teks 2',
+                    color: Colors.deepOrange,
+                    size: _crossAxis == CrossAxisAlignment.stretch ? null : const Size(140, 40),
+                  ),
+                  _ColoredBox(
+                    label: 'Teks 3',
+                    color: Colors.indigo,
+                    size: _crossAxis == CrossAxisAlignment.stretch ? null : const Size(60, 40),
+                  ),
                 ],
               ),
             ),
@@ -227,14 +245,20 @@ class _Latihan1PageState extends State<Latihan1Page> {
               color: Theme.of(context).colorScheme.surfaceContainerHighest,
               borderRadius: BorderRadius.circular(12),
             ),
-            child: Row(
-              mainAxisAlignment: _mainAxis,
-              crossAxisAlignment: _crossAxis,
-              children: const [
-                _ColoredBox(label: 'Img', color: Colors.pink, size: Size(60, 60)),
-                _ColoredBox(label: 'Deskripsi', color: Colors.blueGrey, size: Size(120, 40)),
-                _ColoredBox(label: 'Aksi', color: Colors.green, size: Size(60, 40)),
-              ],
+            child: SizedBox(
+              height: 120,
+              child: Row(
+                mainAxisAlignment: _mainAxis,
+                crossAxisAlignment: _crossAxis,
+                textBaseline: _crossAxis == CrossAxisAlignment.baseline
+                    ? TextBaseline.alphabetic
+                    : null,
+                children: const [
+                  _ColoredBox(label: 'Img', color: Colors.pink, size: Size(60, 60)),
+                  _ColoredBox(label: 'Deskripsi', color: Colors.blueGrey, size: Size(120, 40)),
+                  _ColoredBox(label: 'Aksi', color: Colors.green, size: Size(60, 40)),
+                ],
+              ),
             ),
           ),
         ],
